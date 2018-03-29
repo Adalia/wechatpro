@@ -40,6 +40,9 @@ def weixin_main(request):
 def autoreply(request):
     try:
         webData = request.body
+        print("=============================================")
+        print(webData)
+        print("=============================================")
         xmlData = ET.fromstring(webData)
 
         msg_type = xmlData.find('MsgType').text
@@ -139,3 +142,5 @@ class TextMsg(Msg):
             </xml>
             """
         return XmlForm.format(**self.__dict)
+
+if __main
