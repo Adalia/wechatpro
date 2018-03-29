@@ -11,19 +11,22 @@ import xml.etree.ElementTree as ET
 #django默认开启csrf防护，这里使用@csrf_exempt去掉防护
 @csrf_exempt
 def weixin_main(request):
+    print("已经进入访问")
     if request.method == "GET":
         # 接收微信服务器get请求发过来的参数
-        signature = request.GET.get('signature', None)
-        timestamp = request.GET.get('timestamp', None)
-        nonce = request.GET.get('nonce', None)
-        echostr = request.GET.get('echostr', None)
+        signature = str(request.GET.get('signature', None))
+        timestamp = str(request.GET.get('timestamp', None))
+        nonce = str(request.GET.get('nonce', None))
+        echostr = str(request.GET.get('echostr', None))
         # 服务器配置中的token
         token = 'haihui1215'
         # 把参数放到list中排序后合成一个字符串，再用sha1加密得到新的字符串与微信发来的signature对比，如果相同就返回echostr给服务器，校验通过
         hashlist = [token, timestamp, nonce]
+        print(hashlist)
         hashlist.sort()
         hashstr = ''.join([s for s in hashlist])
-        hashstr = hashlib.sha1(hashstr).hexdigest()
+        # 通过python标准库中的sha1加密算法，处理上面的字符串，形成新的字符串。
+        hashstr = hashlib.sha1(hashstr.encode(encoding='utf-8')).hexdigest()
         if hashstr == signature:
             return HttpResponse(echostr)
         else:
