@@ -143,4 +143,5 @@ class TextMsg(Msg):
             """
         return XmlForm.format(**self.__dict)
 
-if __main
+if __name__=="__main__":
+    pass
