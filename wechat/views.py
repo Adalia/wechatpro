@@ -46,13 +46,21 @@ def autoreply(request):
         xmlData = ET.fromstring(webData)
 
         msg_type = xmlData.find('MsgType').text
+        print("1")
         ToUserName = xmlData.find('ToUserName').text
+        print("2")
         FromUserName = xmlData.find('FromUserName').text
+        print("3")
         CreateTime = xmlData.find('CreateTime').text
+        print("4")
         MsgType = xmlData.find('MsgType').text
+        print("5")
         MsgId = xmlData.find('MsgId').text
+        print("6")
         Event = xmlData.find('Event').text
+        print("7")
         EventKey = xmlData.find('EventKey').text
+        print("8")
 
         toUser = FromUserName
         fromUser = ToUserName
