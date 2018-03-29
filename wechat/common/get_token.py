@@ -24,6 +24,7 @@ def get_token():
         token = response.get("access_token")
         expire_in = response.get("expires_in")
         expire_time = expire_in + timestamp
+        print("下次过期时间："+ str(expire_time))
         conf.setConfig("wx", "expire_time", str(expire_time))
         conf.setConfig("wx", "access_token", token)
         conf.setConfig("wx", "expires_in", str(expire_in))

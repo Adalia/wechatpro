@@ -48,9 +48,12 @@ def autoreply(request):
         CreateTime = xmlData.find('CreateTime').text
         MsgType = xmlData.find('MsgType').text
         MsgId = xmlData.find('MsgId').text
-
+        Event = xmlData.find('Event').text
+        EventKey = xmlData.find('EventKey').text
         toUser = FromUserName
         fromUser = ToUserName
+
+        requestDic = {'MsgType':msg_type,'ToUserName':ToUserName, 'FromUserName':FromUserName, 'CreateTime':CreateTime,'MsgType':MsgType, 'MsgId':MsgId,'Event':Event,'EventKey':EventKey  }
 
         if msg_type == 'text':
             print(toUser)
@@ -65,30 +68,44 @@ def autoreply(request):
             content = "图片已收到,谢谢"
             replyMsg = TextMsg(toUser, fromUser, content)
             return replyMsg.send()
+
         elif msg_type == 'voice':
             content = "语音已收到,谢谢"
             replyMsg = TextMsg(toUser, fromUser, content)
+
             return replyMsg.send()
         elif msg_type == 'video':
             content = "视频已收到,谢谢"
             replyMsg = TextMsg(toUser, fromUser, content)
             return replyMsg.send()
+
         elif msg_type == 'shortvideo':
             content = "小视频已收到,谢谢"
             replyMsg = TextMsg(toUser, fromUser, content)
             return replyMsg.send()
+
         elif msg_type == 'location':
             content = "位置已收到,谢谢"
             replyMsg = TextMsg(toUser, fromUser, content)
             return replyMsg.send()
-        else:
-            msg_type == 'link'
+        elif msg_type == 'link':
             content = "链接已收到,谢谢"
             replyMsg = TextMsg(toUser, fromUser, content)
             return replyMsg.send()
+        elif msg_type == 'event':
+            return doEventReply(requestDic)
 
     except Exception as Argment:
         return Argment
+
+def doEventReply(requestDic):
+    print(requestDic.get("Event"))
+    if requestDic.get("Event")=='CLICK':
+        if requestDic.get("EventKey")=='V1001_test_perfomance':
+            content = "性能测试页面正在维护中，真的非常抱歉！"
+            replyMsg = TextMsg(requestDic.get('FromUserName'), requestDic.get('ToUserName'), content)
+            return replyMsg.send()
+
 
 
 class Msg(object):
