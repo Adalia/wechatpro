@@ -55,8 +55,7 @@ def autoreply(request):
         print("4")
         MsgType = xmlData.find('MsgType').text
         print("5")
-        MsgId = xmlData.find('MsgId').text
-        print("6")
+
         Event = xmlData.find('Event').text
         print("7")
         EventKey = xmlData.find('EventKey').text
@@ -64,7 +63,7 @@ def autoreply(request):
 
         toUser = FromUserName
         fromUser = ToUserName
-        requestDic = {'MsgType':msg_type,'ToUserName':ToUserName, 'FromUserName':FromUserName, 'CreateTime':CreateTime,'MsgType':MsgType, 'MsgId':MsgId,'Event':Event,'EventKey':EventKey  }
+        requestDic = {'MsgType':msg_type,'ToUserName':ToUserName, 'FromUserName':FromUserName, 'CreateTime':CreateTime,'MsgType':MsgType,'Event':Event,'EventKey':EventKey  }
         print(requestDic)
         if msg_type == 'text':
             print(toUser)
