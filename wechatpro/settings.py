@@ -24,8 +24,7 @@ SECRET_KEY = 'nv9nbs=79-$9!f&=$@5*jhmw6#n0h4^n*9j+zqi&1-_37a^tv#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','192.144.138.251','localhost']
 
 
 # Application definition
@@ -75,12 +74,23 @@ WSGI_APPLICATION = 'wechatpro.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
+    #'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    #}
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'wechat',
+            'USER': 'root',
+            'PASSWORD': 'root',
+            'HOST': '127.0.0.1',
+            'PORT': '3306',
+            'OPTIONS': {
+                'autocommit': True,
+            },
+        },
 
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -100,8 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1','192.144.138.251','localhost']
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
