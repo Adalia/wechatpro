@@ -53,11 +53,11 @@ def autoreply(request):
         MsgId = xmlData.find('MsgId').text
         Event = xmlData.find('Event').text
         EventKey = xmlData.find('EventKey').text
+
         toUser = FromUserName
         fromUser = ToUserName
-
         requestDic = {'MsgType':msg_type,'ToUserName':ToUserName, 'FromUserName':FromUserName, 'CreateTime':CreateTime,'MsgType':MsgType, 'MsgId':MsgId,'Event':Event,'EventKey':EventKey  }
-
+        print(requestDic)
         if msg_type == 'text':
             print(toUser)
             content = "您好,欢迎来到Python大学习!希望我们可以一起进步!"
@@ -91,11 +91,14 @@ def autoreply(request):
             content = "位置已收到,谢谢"
             replyMsg = TextMsg(toUser, fromUser, content)
             return replyMsg.send()
+
         elif msg_type == 'link':
             content = "链接已收到,谢谢"
             replyMsg = TextMsg(toUser, fromUser, content)
             return replyMsg.send()
+
         elif msg_type == 'event':
+            print("******接收到event事件*************")
             return doEventReply(requestDic)
 
     except Exception as Argment:
@@ -145,3 +148,17 @@ class TextMsg(Msg):
 
 if __name__=="__main__":
     pass
+
+
+
+'''
+=============================================
+<xml><ToUserName><![CDATA[gh_92df4b2446a2]]></ToUserName>
+<FromUserName><![CDATA[ok_Qa0xAEqcgJvymDdkB5D7mrdrE]]></FromUserName>
+<CreateTime>1522314098</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[CLICK]]></Event>
+<EventKey><![CDATA[V1001_test_perfomance]]></EventKey>
+</xml>
+=============================================
+'''
