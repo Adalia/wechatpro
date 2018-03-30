@@ -1,11 +1,11 @@
 # coding:utf-8
 import requests
-from wechat.common import get_token
+from wechat.common import tool
 import json
 
 
 def baseMenu():
-    url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + get_token.get_token()
+    url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + tool.get_token()
     print(url)
     data = {
          "button":[
