@@ -54,7 +54,7 @@ def autoreply(request):
         FromUserName = xmlData.find('FromUserName').text
         CreateTime = xmlData.find('CreateTime').text
         MsgType = xmlData.find('MsgType').text
-        Event = xmlData.find('Event').text
+       # Event = xmlData.find('Event').text
        #EventKey = xmlData.find('EventKey').text
         print("2------------------------------------")
         toUser = FromUserName
