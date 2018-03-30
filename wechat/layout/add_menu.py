@@ -15,17 +15,17 @@ def baseMenu():
                      {
                          "type": "click",
                          "name": "性能测试",
-                         "key": "V1001_test_perfomance"
+                         "key": "V1001_test"
                      },
                      {
                          "type": "click",
                          "name": "自动化测试",
-                         "key": "V1002_test_autotest"
+                         "key": "V1002_test"
                      },
                      {
                          "type": "click",
                          "name": "接口测试",
-                         "key": "V1003_test_interface"
+                         "key": "V1003_test"
                      }
                  ]
                 },

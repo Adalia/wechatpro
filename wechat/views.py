@@ -1,6 +1,4 @@
-from django.shortcuts import render
-
-# Create your views here.
+# coding:utf-8
 import hashlib, json
 import requests, _thread
 import xml.etree.ElementTree as ET
@@ -52,7 +50,7 @@ def autoreply(request):
         fromUser = ToUserName
         if msg_type == 'text':
             try:
-                _thread.start_new_thread(customerservice.customerService(xmldata),("replay"+toUser, ))   #异步回复消息
+                _thread.start_new_thread(customerservice.doTextReply(xmldata),("replay"+toUser, ))   #异步回复消息
             except Exception as e:
                 print(e)
             return ""
@@ -65,19 +63,12 @@ def autoreply(request):
 
         elif msg_type == 'event':
             print("******接收到event事件*************")
-            #return doEventReply(requestDic)
+            _thread.start_new_thread(customerservice.doEventReply(xmldata),("replay"+toUser, ))
             return ""
 
     except Exception as Argment:
         return Argment
 
-def doEventReply(requestDic):
-    print(requestDic.get("Event"))
-    if requestDic.get("Event")=='CLICK':
-        if requestDic.get("EventKey")=='V1001_test_perfomance':
-            content = "性能测试页面正在维护中，真的非常抱歉！"
-            replyMsg = msg.TextMsg(requestDic.get('FromUserName'), requestDic.get('ToUserName'), content)
-            return replyMsg.send()
 
 
 if __name__=="__main__":

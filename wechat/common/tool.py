@@ -27,7 +27,6 @@ def get_token():
 
 
 def getXmlElement(xmldata,elementname):
-    print("*****request body:"+str(xmldata))
     try:
         element = xmldata.find(elementname)
         if element is not None :
