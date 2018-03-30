@@ -7,6 +7,9 @@ from django.utils.encoding import smart_str
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import xml.etree.ElementTree as ET
+from wechat.common import get_token
+import requests
+import _thread
 
 #django默认开启csrf防护，这里使用@csrf_exempt去掉防护
 @csrf_exempt
@@ -43,29 +46,27 @@ def autoreply(request):
         print("=============================================")
         print(webData)
         print("=============================================")
+        print("1------------------------------------")
         xmlData = ET.fromstring(webData)
 
-        msg_type = xmlData.find('MsgType1111').text
-        print("1")
+        msg_type = xmlData.find('MsgType').text
         ToUserName = xmlData.find('ToUserName').text
-        print("2")
         FromUserName = xmlData.find('FromUserName').text
-        print("3")
         CreateTime = xmlData.find('CreateTime').text
-        print("4")
         MsgType = xmlData.find('MsgType').text
-        print("5")
-
         Event = xmlData.find('Event').text
-        print("7")
         EventKey = xmlData.find('EventKey').text
-        print("8")
 
         toUser = FromUserName
         fromUser = ToUserName
         requestDic = {'MsgType':msg_type,'ToUserName':ToUserName, 'FromUserName':FromUserName, 'CreateTime':CreateTime,'MsgType':MsgType,'Event':Event,'EventKey':EventKey  }
+
         print(requestDic)
         if msg_type == 'text':
+            print("*****************"+getXmlElement(request,"Content")+"**************************")
+            _thread.start_new_thread(customerService(getXmlElement(request,"Content"),toUser))
+            return "success"
+            '''
             print(toUser)
             content = "您好,欢迎来到Python大学习!希望我们可以一起进步!"
             replyMsg = TextMsg(toUser, fromUser, content)
@@ -73,8 +74,11 @@ def autoreply(request):
             print
             replyMsg
             return replyMsg.send()
+            '''
 
         elif msg_type == 'image':
+
+
             content = "图片已收到,谢谢"
             replyMsg = TextMsg(toUser, fromUser, content)
             return replyMsg.send()
@@ -109,7 +113,7 @@ def autoreply(request):
             return doEventReply(requestDic)
 
     except Exception as Argment:
-        return replyMsg.send()
+        return Argment
 
 def doEventReply(requestDic):
     print(requestDic.get("Event"))
@@ -119,8 +123,30 @@ def doEventReply(requestDic):
             replyMsg = TextMsg(requestDic.get('FromUserName'), requestDic.get('ToUserName'), content)
             return replyMsg.send()
 
+def customerService(customersend,toUser):
+    print("************异步回复客户请求********************")
+    ACCESS_TOKEN = get_token.get_token()
+    url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + ACCESS_TOKEN
+    print(url)
+    replyContent = ""
+    open
+    if customersend =="hello":
+        replyContent = "你好，请问有什么可以帮您？"
+    else:
+        replyContent = "请输入:你好！"
+
+    data = {"touser":toUser,
+            "msgtype":"text",
+            "text":{
+                "content":replyContent
+            }
+            }
+    data=json.dumps(data).encode('utf-8')
+    requests.post(url,data=data)
+
 
 def getXmlElement(request,elementname):
+    print("*****request body:"+request.body)
     try:
         webData = request.body
         print("=============================================")

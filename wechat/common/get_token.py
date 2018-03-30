@@ -28,6 +28,7 @@ def get_token():
         conf.setConfig("wx", "expire_time", str(expire_time))
         conf.setConfig("wx", "access_token", token)
         conf.setConfig("wx", "expires_in", str(expire_in))
+    print(token)
     return token
 
 
