@@ -16,7 +16,6 @@ class getConfig:
 
     def setConfig(self,section,key,value):
         if self.cf.has_option(section,key):
-            print("**************")
             self.cf.set(section,key,value)
             self.cf.write(open(self.conffile,"w"))
 

@@ -123,6 +123,7 @@ def doEventReply(requestDic):
 def customerService(xmlData):
     print("************异步回复客户请求********************")
     ACCESS_TOKEN = get_token.get_token()
+    print("get_token+++++++++++++++++++++++")
     url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + ACCESS_TOKEN
     print(url)
     replyContent = ""
