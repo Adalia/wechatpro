@@ -108,9 +108,9 @@ def customerService(xmlData):
                 "content":replyContent
             }
             }
-    data=json.dumps(data).encode('utf-8')
+    jsondata=json.dumps(data,ensure_ascii=False).encode('utf-8')
     print(xmlData.find('Content').text)
-    requests.post(url,data=data)
+    requests.post(url,data=jsondata)
 
 
 def getXmlElement(request,elementname):
