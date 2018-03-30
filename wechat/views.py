@@ -52,7 +52,7 @@ def autoreply(request):
         fromUser = ToUserName
         if msg_type == 'text':
             try:
-                _thread.start_new_thread(customerservice.customerService(xmldata),("replay", ))   #异步回复消息
+                _thread.start_new_thread(customerservice.customerService(xmldata),("replay"+toUser, ))   #异步回复消息
             except Exception as e:
                 print(e)
             return ""
@@ -65,7 +65,7 @@ def autoreply(request):
 
         elif msg_type == 'event':
             print("******接收到event事件*************")
-           # return doEventReply(requestDic)
+            #return doEventReply(requestDic)
             return ""
 
     except Exception as Argment:
@@ -78,8 +78,6 @@ def doEventReply(requestDic):
             content = "性能测试页面正在维护中，真的非常抱歉！"
             replyMsg = msg.TextMsg(requestDic.get('FromUserName'), requestDic.get('ToUserName'), content)
             return replyMsg.send()
-
-
 
 
 if __name__=="__main__":
