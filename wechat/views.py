@@ -8,6 +8,7 @@ import threading
 
 from wechat.common.tool import getxmlElement, get_token
 from wechat.common import msg,customerservice
+from wechat.common import msg
 
 # django默认开启csrf防护，这里使用@csrf_exempt去掉防护
 
@@ -44,27 +45,26 @@ def autoreply(request):
     try:
         webdata = request.body
         xmldata = ET.fromstring(webdata)
+        #webdata=request
+        #xmldata = ET.fromstring(webdata)
         msg_type = xmldata.find('MsgType').text
-        ToUserName = xmldata.find('ToUserName').text
-        FromUserName = xmldata.find('FromUserName').text
-        toUser = FromUserName
-        fromUser = ToUserName
+        print(msg_type)
         if msg_type == 'text':
+            return msg.TextMsg(xmldata).send()
+            '''
             try:
                 #_thread.start_new_thread(customerservice.doTextReply(xmldata),("replay"+toUser, ))   #异步回复消息
-                threading.Thread(target=customerservice.doTextReply,args=(xmldata),name="replay"+toUser).start()
+                threading.Thread(target=customerservice.doTextReply,args=(xmldata,),name="replay"+toUser).start()
             except Exception as e:
                 print(e)
-            print("hahahahahh")
             return ""
-        elif msg_type == 'text':
-            print(toUser)
-            content = "您好!"
-            replyMsg = msg.TextMsg(toUser, fromUser, content)
-            return replyMsg.send()
+            '''
+
+
         elif msg_type == 'event':
             print("******接收到event事件*************")
             event = getxmlElement(xmldata,"Event")
+            toUser = getxmlElement(xmldata,"FromUserName")
             print(event)
             if event=="CLICK":
                 #_thread.start_new_thread(customerservice.doEventReply(xmldata), ("replay" + toUser,))  #
@@ -81,7 +81,7 @@ if __name__=="__main__":
     data = "<xml><ToUserName><![CDATA[gh_92df4b2446a2]]></ToUserName>\
     <FromUserName><![CDATA[ok_Qa0xAEqcgJvymDdkB5D7mrdrE]]></FromUserName>\
     <CreateTime>1522314098</CreateTime>\
-    <MsgType><![CDATA[event]]></MsgType>\
+    <MsgType><![CDATA[text]]></MsgType>\
     <Content><![CDATA[hello]]></Content>\
     <Event><![CDATA[CLICK]]></Event>\
     <EventKey><![CDATA[V1002_test]]></EventKey>\

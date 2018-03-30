@@ -4,25 +4,6 @@ from wechat.common.tool import getxmlElement, get_token
 from wechat.common.requestxml import *
 import threading
 
-def doTextReply(xmldata):
-    print("************异步回复客户请求********************")
-    content = getxmlElement(xmldata, "Content")
-    fromuser = getxmlElement(xmldata,"FromUserName")
-    if content =="hello" or content =="你好":
-        replycontent = "你好，请问有什么可以帮您？"
-    else:
-        replycontent = "请输入:你好！"
-    data = {"touser":fromuser,
-            "msgtype":"text",
-            "text":{
-                "content":replycontent
-            }
-    }
-    print(replycontent)
-    jsondata = json.dumps(data,ensure_ascii=False).encode('utf-8')
-    ACCESS_TOKEN = get_token()
-    url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + ACCESS_TOKEN
-    requests.post(url,data=jsondata)
 
 import time
 def doEventReply(xmldata):
@@ -56,6 +37,27 @@ def doEventReply(xmldata):
 
 def doSubscribeReply(xmldata):
     pass
+
+
+def doTextReply(xmldata):
+    print("************异步回复客户请求********************")
+    content = getxmlElement(xmldata, "Content")
+    fromuser = getxmlElement(xmldata,"FromUserName")
+    if content =="hello" or content =="你好":
+        replycontent = "你好，请问有什么可以帮您？"
+    else:
+        replycontent = "请输入:你好！"
+    data = {"touser":fromuser,
+            "msgtype":"text",
+            "text":{
+                "content":replycontent
+            }
+    }
+    print(replycontent)
+    jsondata = json.dumps(data,ensure_ascii=False).encode('utf-8')
+    ACCESS_TOKEN = get_token()
+    url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + ACCESS_TOKEN
+    requests.post(url,data=jsondata)
 
 if __name__ =="__main__":
     data = "<xml><ToUserName><![CDATA[gh_92df4b2446a2]]></ToUserName>\
