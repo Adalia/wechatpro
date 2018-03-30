@@ -58,11 +58,12 @@ def autoreply(request):
         fromUser = ToUserName
         print("4---------" + msg_type)
         if msg_type == 'text':
-            content = getXmlElement(request,"Content")
+
             print("5---------" + msg_type)
-            print("*****************"+content+"**************************")
-            _thread.start_new_thread(customerService(content,toUser))
+
+            _thread.start_new_thread(customerService(xmlData))
             return "success"
+
             '''
             print(toUser)
             content = "您好,欢迎来到Python大学习!希望我们可以一起进步!"
@@ -119,19 +120,19 @@ def doEventReply(requestDic):
             replyMsg = TextMsg(requestDic.get('FromUserName'), requestDic.get('ToUserName'), content)
             return replyMsg.send()
 
-def customerService(customersend,toUser):
+def customerService(xmlData):
     print("************异步回复客户请求********************")
     ACCESS_TOKEN = get_token.get_token()
     url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + ACCESS_TOKEN
     print(url)
     replyContent = ""
     open
-    if customersend =="hello":
+    if xmlData.find('Content').text =="hello":
         replyContent = "你好，请问有什么可以帮您？"
     else:
         replyContent = "请输入:你好！"
 
-    data = {"touser":toUser,
+    data = {"touser":xmlData.find('fromUserName').text,
             "msgtype":"text",
             "text":{
                 "content":replyContent
