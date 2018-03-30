@@ -26,7 +26,6 @@ def doTextReply(xmldata):
 
 import time
 def doEventReply(xmldata):
-    time.sleep(6)
     event = MenuEventxml(xmldata)
     print(event.event)
     print(event.eventkey)
