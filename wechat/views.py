@@ -43,36 +43,28 @@ def weixin_main(request):
 def autoreply(request):
     try:
         webData = request.body
-        print("=============================================")
-        print(webData)
-        print("=============================================")
-        print("1------------------------------------")
         xmlData = ET.fromstring(webData)
-        print("2------------------------------------")
         msg_type = xmlData.find('MsgType').text
         ToUserName = xmlData.find('ToUserName').text
         FromUserName = xmlData.find('FromUserName').text
-
-        print("3---------"+msg_type)
         toUser = FromUserName
         fromUser = ToUserName
-        print("4---------" + msg_type)
         if msg_type == 'text':
+            print("5---------" + msg_type)
+            try:
+                _thread.start_new_thread(customerService(xmlData),("replay", ))   #异步回复消息
+            except Exception as e:
+                print(e)
+            return ""
 
-            '''
+        elif msg_type == 'text':
             print(toUser)
-            content = "您好,欢迎来到Python大学习!希望我们可以一起进步!"
+            content = "您好!"
             replyMsg = TextMsg(toUser, fromUser, content)
             print("成功了!!!!!!!!!!!!!!!!!!!")
             print
             replyMsg
             return replyMsg.send()
-            '''
-            print("5---------" + msg_type)
-
-            _thread.start_new_thread(customerService(xmlData))
-            return ""
-
 
         elif msg_type == 'event':
             print("******接收到event事件*************")
