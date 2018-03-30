@@ -118,7 +118,21 @@ def doEventReply(requestDic):
             content = "性能测试页面正在维护中，真的非常抱歉！"
             replyMsg = TextMsg(requestDic.get('FromUserName'), requestDic.get('ToUserName'), content)
             return replyMsg.send()
-
+			
+def getXmlElement(request,elementname):
+	try:
+        webData = request.body
+        print("=============================================")
+        print(webData)
+        print("=============================================")
+        xmlData = ET.fromstring(webData)
+		element = xmlData.find(elementname)
+		if element is not NULL :
+			return element.text
+		else:
+			return element	
+	except Exception as Argment:
+        return Argment
 
 
 class Msg(object):
