@@ -52,13 +52,11 @@ def autoreply(request):
         msg_type = xmlData.find('MsgType').text
         ToUserName = xmlData.find('ToUserName').text
         FromUserName = xmlData.find('FromUserName').text
-       # Event = xmlData.find('Event').text
-       #EventKey = xmlData.find('EventKey').text
+
         print("3---------"+msg_type)
         toUser = FromUserName
         fromUser = ToUserName
-        #requestDic = {'MsgType':msg_type,'ToUserName':ToUserName, 'FromUserName':FromUserName, 'CreateTime':CreateTime,'MsgType':MsgType,'Event':Event,'EventKey':EventKey  }
-       # print(requestDic)
+        print("4---------" + msg_type)
         if msg_type == 'text':
             print("*****************"+getXmlElement(request,"Content")+"**************************")
             _thread.start_new_thread(customerService(getXmlElement(request,"Content"),toUser))
