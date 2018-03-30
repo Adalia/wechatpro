@@ -26,7 +26,8 @@ def get_token():
     return token
 
 
-def getXmlElement(xmldata,elementname):
+def getxmlElement(xmldata,elementname):
+    print("获取"+elementname)
     try:
         element = xmldata.find(elementname)
         if element is not None :

@@ -4,7 +4,7 @@ def post_wx():
     data = "<xml><ToUserName><![CDATA[gh_92df4b2446a2]]></ToUserName>\
        <FromUserName><![CDATA[ok_Qa0xAEqcgJvymDdkB5D7mrdrE]]></FromUserName>\
        <CreateTime>1522314098</CreateTime>\
-       <MsgType><![CDATA[text]]></MsgType>\
+       <MsgType><![CDATA[event]]></MsgType>\
        <Content><![CDATA[你好]]></Content>\
        <Event><![CDATA[CLICK]]></Event>\
        <EventKey><![CDATA[V1001_test_perfomance]]></EventKey>\

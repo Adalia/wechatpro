@@ -4,8 +4,9 @@ import requests, _thread
 import xml.etree.ElementTree as ET
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+import threading
 
-from wechat.common.tool import getXmlElement, get_token
+from wechat.common.tool import getxmlElement, get_token
 from wechat.common import msg,customerservice
 
 # django默认开启csrf防护，这里使用@csrf_exempt去掉防护
@@ -38,11 +39,12 @@ def weixin_main(request):
         return HttpResponse(othercontent)
 
 # 微信服务器推送消息是xml的，根据利用ElementTree来解析出的不同xml内容返回不同的回复信息，就实现了基本的自动回复功能了，也可以按照需求用其他的XML解析方法
-
+import time
 def autoreply(request):
     try:
-        webdata = request.body
-        xmldata = ET.fromstring(webdata)
+        #webdata = request.body
+        #xmldata = ET.fromstring(webdata)
+        xmldata = ET.fromstring(request)
         msg_type = xmldata.find('MsgType').text
         ToUserName = xmldata.find('ToUserName').text
         FromUserName = xmldata.find('FromUserName').text
@@ -50,20 +52,25 @@ def autoreply(request):
         fromUser = ToUserName
         if msg_type == 'text':
             try:
-                _thread.start_new_thread(customerservice.doTextReply(xmldata),("replay"+toUser, ))   #异步回复消息
+                #_thread.start_new_thread(customerservice.doTextReply(xmldata),("replay"+toUser, ))   #异步回复消息
+                threading.Thread(target=customerservice.doTextReply,args=(xmldata),name="replay"+toUser).start()
             except Exception as e:
                 print(e)
+            print("hahahahahh")
             return ""
-
         elif msg_type == 'text':
             print(toUser)
             content = "您好!"
             replyMsg = msg.TextMsg(toUser, fromUser, content)
             return replyMsg.send()
-
         elif msg_type == 'event':
             print("******接收到event事件*************")
-            _thread.start_new_thread(customerservice.doEventReply(xmldata),("replay"+toUser, ))
+            event = getxmlElement(xmldata,"Event")
+            print(event)
+            if event=="CLICK":
+                #_thread.start_new_thread(customerservice.doEventReply(xmldata), ("replay" + toUser,))  #
+                threading.Thread(target=customerservice.doEventReply, args=(xmldata,), name="replay" + toUser).start()
+            print("hahahhahahah")
             return ""
 
     except Exception as Argment:
@@ -78,11 +85,12 @@ if __name__=="__main__":
     <MsgType><![CDATA[event]]></MsgType>\
     <Content><![CDATA[hello]]></Content>\
     <Event><![CDATA[CLICK]]></Event>\
-    <EventKey><![CDATA[V1001_test_perfomance]]></EventKey>\
+    <EventKey><![CDATA[V1002_test]]></EventKey>\
     </xml>"
-    xmldata = ET.fromstring(data)
-    customerservice.customerService(xmldata)
-    print(getXmlElement(xmldata, "Mspe"))
+    autoreply(data)
+    #xmldata = ET.fromstring(data)
+    #customerservice.customerService(xmldata)
+   # print(getxmlElement(xmldata, "Mspe"))
 
 
 
