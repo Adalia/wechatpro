@@ -108,7 +108,10 @@ def customerService(xmlData):
                 "content":replyContent
             }
             }
-    jsondata=json.dumps(data,ensure_ascii=False).encode('utf-8')
+    try:
+        jsondata=json.dumps(data,ensure_ascii=False).encode('utf-8')
+    except Exception as e:
+        print(e)
     print(xmlData.find('Content').text)
     requests.post(url,data=jsondata)
 
