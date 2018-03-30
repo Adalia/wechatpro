@@ -58,6 +58,7 @@ def autoreply(request):
         fromUser = ToUserName
         print("4---------" + msg_type)
         if msg_type == 'text':
+            print("5---------" + msg_type)
             print("*****************"+getXmlElement(request,"Content")+"**************************")
             _thread.start_new_thread(customerService(getXmlElement(request,"Content"),toUser))
             return "success"
