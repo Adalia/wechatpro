@@ -56,12 +56,12 @@ def autoreply(request):
         MsgType = xmlData.find('MsgType').text
         Event = xmlData.find('Event').text
         EventKey = xmlData.find('EventKey').text
-
+        print("2------------------------------------")
         toUser = FromUserName
         fromUser = ToUserName
         requestDic = {'MsgType':msg_type,'ToUserName':ToUserName, 'FromUserName':FromUserName, 'CreateTime':CreateTime,'MsgType':MsgType,'Event':Event,'EventKey':EventKey  }
-
         print(requestDic)
+
         if msg_type == 'text':
             print("*****************"+getXmlElement(request,"Content")+"**************************")
             _thread.start_new_thread(customerService(getXmlElement(request,"Content"),toUser))
@@ -77,8 +77,6 @@ def autoreply(request):
             '''
 
         elif msg_type == 'image':
-
-
             content = "图片已收到,谢谢"
             replyMsg = TextMsg(toUser, fromUser, content)
             return replyMsg.send()
@@ -106,7 +104,7 @@ def autoreply(request):
         elif msg_type == 'link':
             content = "链接已收到,谢谢"
             replyMsg = TextMsg(toUser, fromUser, content)
-            return replyMsg.sendnull()
+            return replyMsg.send()
 
         elif msg_type == 'event':
             print("******接收到event事件*************")
@@ -194,9 +192,6 @@ class TextMsg(Msg):
             </xml>
             """
         return XmlForm.format(**self.__dict)
-
-    def sendnull(self):
-        return "success"
 
 if __name__=="__main__":
     pass
