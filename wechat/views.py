@@ -59,11 +59,6 @@ def autoreply(request):
         print("4---------" + msg_type)
         if msg_type == 'text':
 
-            print("5---------" + msg_type)
-
-            _thread.start_new_thread(customerService(xmlData))
-            return "success"
-
             '''
             print(toUser)
             content = "您好,欢迎来到Python大学习!希望我们可以一起进步!"
@@ -73,36 +68,11 @@ def autoreply(request):
             replyMsg
             return replyMsg.send()
             '''
+            print("5---------" + msg_type)
 
-        elif msg_type == 'image':
-            content = "图片已收到,谢谢"
-            replyMsg = TextMsg(toUser, fromUser, content)
-            return replyMsg.send()
+            _thread.start_new_thread(customerService(xmlData))
+            return "success"
 
-        elif msg_type == 'voice':
-            content = "语音已收到,谢谢"
-            replyMsg = TextMsg(toUser, fromUser, content)
-
-            return replyMsg.send()
-        elif msg_type == 'video':
-            content = "视频已收到,谢谢"
-            replyMsg = TextMsg(toUser, fromUser, content)
-            return replyMsg.send()
-
-        elif msg_type == 'shortvideo':
-            content = "小视频已收到,谢谢"
-            replyMsg = TextMsg(toUser, fromUser, content)
-            return replyMsg.send()
-
-        elif msg_type == 'location':
-            content = "位置已收到,谢谢"
-            replyMsg = TextMsg(toUser, fromUser, content)
-            return replyMsg.send()
-
-        elif msg_type == 'link':
-            content = "链接已收到,谢谢"
-            replyMsg = TextMsg(toUser, fromUser, content)
-            return replyMsg.send()
 
         elif msg_type == 'event':
             print("******接收到event事件*************")
