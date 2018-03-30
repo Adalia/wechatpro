@@ -91,40 +91,33 @@ def doEventReply(requestDic):
             return replyMsg.send()
 
 def customerService(xmlData):
+
     print("************异步回复客户请求********************")
-    ACCESS_TOKEN = get_token.get_token()
-    print("get_token+++++++++++++++++++++++")
-    url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + ACCESS_TOKEN
-    print(url)
     replyContent = ""
-    if xmlData.find('Content').text =="hello":
+    if xmlData.find('Content').text =="hello" or xmlData.find('Content').text =="你好":
         replyContent = "你好，请问有什么可以帮您？"
     else:
         replyContent = "请输入:你好！"
 
-    data = {"touser":xmlData.find('fromUserName').text,
+    data = {"touser":xmlData.find('FromUserName').text,
             "msgtype":"text",
             "text":{
                 "content":replyContent
             }
             }
-    try:
-        jsondata=json.dumps(data,ensure_ascii=False).encode('utf-8')
-    except Exception as e:
-        print(e)
-    print(xmlData.find('Content').text)
+    jsondata=json.dumps(data,ensure_ascii=False).encode('utf-8')
+    print(replyContent)
+
+    ACCESS_TOKEN = get_token.get_token()
+    print("get_token+++++++++++++++++++++++")
+    url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + ACCESS_TOKEN
+    print(url)
     requests.post(url,data=jsondata)
 
-
-def getXmlElement(request,elementname):
-    print("*****request body:"+request.body)
+def getXmlElement(xmldata,elementname):
+    print("*****request body:"+xmldata)
     try:
-        webData = request.body
-        print("---------------------------------------------")
-        print(webData)
-        print("---------------------------------------------")
-        xmlData = ET.fromstring(webData)
-        element = xmlData.find(elementname)
+        element = xmldata.find(elementname)
         if element is not None :
             return element.text
         else:
@@ -132,7 +125,6 @@ def getXmlElement(request,elementname):
 
     except Exception as Argment:
         return Argment
-
 
 class Msg(object):
     def __init__(self, xmlData):
@@ -145,7 +137,7 @@ class Msg(object):
 
 import time
 
-
+import re
 class TextMsg(Msg):
     def __init__(self, toUserName, fromUserName, content):
         self.__dict = dict()
@@ -167,18 +159,17 @@ class TextMsg(Msg):
         return XmlForm.format(**self.__dict)
 
 if __name__=="__main__":
-    pass
+    data = "<xml><ToUserName><![CDATA[gh_92df4b2446a2]]></ToUserName>\
+    <FromUserName><![CDATA[ok_Qa0xAEqcgJvymDdkB5D7mrdrE]]></FromUserName>\
+    <CreateTime>1522314098</CreateTime>\
+    <MsgType><![CDATA[event]]></MsgType>\
+    <Content><![CDATA[hello]]></Content>\
+    <Event><![CDATA[CLICK]]></Event>\
+    <EventKey><![CDATA[V1001_test_perfomance]]></EventKey>\
+    </xml>"
+    xmldata = ET.fromstring(data)
+    customerService(xmldata)
 
 
 
-'''
-=============================================
-<xml><ToUserName><![CDATA[gh_92df4b2446a2]]></ToUserName>
-<FromUserName><![CDATA[ok_Qa0xAEqcgJvymDdkB5D7mrdrE]]></FromUserName>
-<CreateTime>1522314098</CreateTime>
-<MsgType><![CDATA[event]]></MsgType>
-<Event><![CDATA[CLICK]]></Event>
-<EventKey><![CDATA[V1001_test_perfomance]]></EventKey>
-</xml>
-=============================================
-'''
+
