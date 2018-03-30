@@ -43,7 +43,23 @@ def baseMenu():
                          "url":"http://mp.weixin.qq.com",
                     },
                     ]
-               }]
+               },
+            {
+                 "name": "others",
+                 "sub_button": [
+                     {
+                         "type": "view",
+                         "name": "1",
+                         "url": "http://www.soso.com/"
+                     },
+                     {
+                         "type": "view",
+                         "name": "2",
+                         "url": "http://mp.weixin.qq.com",
+                     },
+                 ]
+             }
+         ]
      }
     print(type(data))
     jsondata = json.dumps(data,ensure_ascii=False).encode("utf-8")
