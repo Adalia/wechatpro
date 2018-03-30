@@ -7,7 +7,7 @@ def post_wx():
        <MsgType><![CDATA[event]]></MsgType>\
        <Content><![CDATA[你好]]></Content>\
        <Event><![CDATA[CLICK]]></Event>\
-       <EventKey><![CDATA[V1001_test_perfomance]]></EventKey>\
+       <EventKey><![CDATA[V1001_test]]></EventKey>\
        </xml>"
     headers = {'content-type': 'text/xml'}
     res=requests.post("http://127.0.0.1:8000/wx/",data=data.encode('utf-8'),headers=headers)

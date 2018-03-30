@@ -42,9 +42,8 @@ def weixin_main(request):
 import time
 def autoreply(request):
     try:
-        #webdata = request.body
-        #xmldata = ET.fromstring(webdata)
-        xmldata = ET.fromstring(request)
+        webdata = request.body
+        xmldata = ET.fromstring(webdata)
         msg_type = xmldata.find('MsgType').text
         ToUserName = xmldata.find('ToUserName').text
         FromUserName = xmldata.find('FromUserName').text
