@@ -58,9 +58,10 @@ def autoreply(request):
         fromUser = ToUserName
         print("4---------" + msg_type)
         if msg_type == 'text':
+            content = getXmlElement(request,"Content")
             print("5---------" + msg_type)
-            print("*****************"+getXmlElement(request,"Content")+"**************************")
-            _thread.start_new_thread(customerService(getXmlElement(request,"Content"),toUser))
+            print("*****************"+content+"**************************")
+            _thread.start_new_thread(customerService(content,toUser))
             return "success"
             '''
             print(toUser)
@@ -144,9 +145,9 @@ def getXmlElement(request,elementname):
     print("*****request body:"+request.body)
     try:
         webData = request.body
-        print("=============================================")
+        print("---------------------------------------------")
         print(webData)
-        print("=============================================")
+        print("---------------------------------------------")
         xmlData = ET.fromstring(webData)
         element = xmlData.find(elementname)
         if element is not None :
