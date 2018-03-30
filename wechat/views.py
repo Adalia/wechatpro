@@ -15,7 +15,7 @@ def weixin_main(request):
     if request.method == "GET":
         # 接收微信服务器get请求发过来的参数
         signature = str(request.GET.get('signature', None))
-        timestamp = str(request.GET.get('timestamp111', None))
+        timestamp = str(request.GET.get('timestamp', None))
         nonce = str(request.GET.get('nonce', None))
         echostr = str(request.GET.get('echostr', None))
         # 服务器配置中的token
@@ -45,7 +45,7 @@ def autoreply(request):
         print("=============================================")
         xmlData = ET.fromstring(webData)
 
-        msg_type = xmlData.find('MsgType').text
+        msg_type = xmlData.find('MsgType1111').text
         print("1")
         ToUserName = xmlData.find('ToUserName').text
         print("2")
