@@ -127,8 +127,8 @@ def customerService(xmlData):
     url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + ACCESS_TOKEN
     print(url)
     replyContent = ""
-    open
     if xmlData.find('Content').text =="hello":
+        print(xmlData.find('Content').text)
         replyContent = "你好，请问有什么可以帮您？"
     else:
         replyContent = "请输入:你好！"
