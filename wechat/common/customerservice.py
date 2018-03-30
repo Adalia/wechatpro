@@ -32,13 +32,15 @@ def doEventReply(xmldata):
     print(event.eventkey)
 
     if event.event =='CLICK':
+        print(event.eventkey)
         if event.eventkey == 'V1001_test':
             content = "性能测试页面正在维护中，真的非常抱歉！"
-
         elif event.eventkey == 'V1002_test':
             content = "自动化测试页面正在维护中，真的非常抱歉！"
-        else:
+        elif event.eventkey == 'V1003_test':
             content = "接口测试页面正在维护中，真的非常抱歉！"
+        else:
+            content = "sorry！"
 
     print(content)
     data = {"touser": xmldata.find('FromUserName').text,
@@ -63,7 +65,7 @@ if __name__ =="__main__":
         <MsgType><![CDATA[event]]></MsgType>\
         <Content><![CDATA[hello]]></Content>\
         <Event><![CDATA[CLICK]]></Event>\
-        <EventKey><![CDATA[V1001_test]]></EventKey>\
+        <EventKey><![CDATA[V1003_test]]></EventKey>\
         </xml>"
     xmldata = ET.fromstring(data)
     doEventReply(xmldata)
