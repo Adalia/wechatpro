@@ -15,7 +15,7 @@ def weixin_main(request):
     if request.method == "GET":
         # 接收微信服务器get请求发过来的参数
         signature = str(request.GET.get('signature', None))
-        timestamp = str(request.GET.get('timestamp', None))
+        timestamp = str(request.GET.get('timestamp111', None))
         nonce = str(request.GET.get('nonce', None))
         echostr = str(request.GET.get('echostr', None))
         # 服务器配置中的token
@@ -102,14 +102,14 @@ def autoreply(request):
         elif msg_type == 'link':
             content = "链接已收到,谢谢"
             replyMsg = TextMsg(toUser, fromUser, content)
-            return replyMsg.send()
+            return replyMsg.sendnull()
 
         elif msg_type == 'event':
             print("******接收到event事件*************")
             return doEventReply(requestDic)
 
     except Exception as Argment:
-        return Argment
+        return replyMsg.send()
 
 def doEventReply(requestDic):
     print(requestDic.get("Event"))
@@ -118,20 +118,22 @@ def doEventReply(requestDic):
             content = "性能测试页面正在维护中，真的非常抱歉！"
             replyMsg = TextMsg(requestDic.get('FromUserName'), requestDic.get('ToUserName'), content)
             return replyMsg.send()
-			
+
+
 def getXmlElement(request,elementname):
-	try:
+    try:
         webData = request.body
         print("=============================================")
         print(webData)
         print("=============================================")
         xmlData = ET.fromstring(webData)
-		element = xmlData.find(elementname)
-		if element is not NULL :
-			return element.text
-		else:
-			return element	
-	except Exception as Argment:
+        element = xmlData.find(elementname)
+        if element is not None :
+            return element.text
+        else:
+            return element
+
+    except Exception as Argment:
         return Argment
 
 
@@ -166,6 +168,9 @@ class TextMsg(Msg):
             </xml>
             """
         return XmlForm.format(**self.__dict)
+
+    def sendnull(self):
+        return "success"
 
 if __name__=="__main__":
     pass
