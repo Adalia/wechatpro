@@ -128,7 +128,6 @@ def customerService(xmlData):
     print(url)
     replyContent = ""
     if xmlData.find('Content').text =="hello":
-        print(xmlData.find('Content').text)
         replyContent = "你好，请问有什么可以帮您？"
     else:
         replyContent = "请输入:你好！"
@@ -140,6 +139,7 @@ def customerService(xmlData):
             }
             }
     data=json.dumps(data).encode('utf-8')
+    print(xmlData.find('Content').text)
     requests.post(url,data=data)
 
 
