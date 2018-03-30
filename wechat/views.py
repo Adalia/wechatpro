@@ -55,12 +55,12 @@ def autoreply(request):
         CreateTime = xmlData.find('CreateTime').text
         MsgType = xmlData.find('MsgType').text
         Event = xmlData.find('Event').text
-        EventKey = xmlData.find('EventKey').text
+       #EventKey = xmlData.find('EventKey').text
         print("2------------------------------------")
         toUser = FromUserName
         fromUser = ToUserName
-        requestDic = {'MsgType':msg_type,'ToUserName':ToUserName, 'FromUserName':FromUserName, 'CreateTime':CreateTime,'MsgType':MsgType,'Event':Event,'EventKey':EventKey  }
-        print(requestDic)
+        #requestDic = {'MsgType':msg_type,'ToUserName':ToUserName, 'FromUserName':FromUserName, 'CreateTime':CreateTime,'MsgType':MsgType,'Event':Event,'EventKey':EventKey  }
+       # print(requestDic)
 
         if msg_type == 'text':
             print("*****************"+getXmlElement(request,"Content")+"**************************")
@@ -108,7 +108,8 @@ def autoreply(request):
 
         elif msg_type == 'event':
             print("******接收到event事件*************")
-            return doEventReply(requestDic)
+           # return doEventReply(requestDic)
+            return ""
 
     except Exception as Argment:
         return Argment
