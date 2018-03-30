@@ -71,7 +71,7 @@ def autoreply(request):
             print("5---------" + msg_type)
 
             _thread.start_new_thread(customerService(xmlData))
-            return "success"
+            return ""
 
 
         elif msg_type == 'event':
