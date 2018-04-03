@@ -62,8 +62,7 @@ def doTextReply(xmldata):
 
 
 def doHistoryReply(xmldata):
-    print("************客服消息********************")
-    content = getxmlElement(xmldata, "Content")
+    print("************历史消息********************")
     fromuser = getxmlElement(xmldata,"FromUserName")
     replycontent = "历史消息正在准备中"
     data = {"touser":fromuser,

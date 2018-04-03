@@ -49,10 +49,10 @@ def autoreply(request):
         #xmldata = ET.fromstring(webdata)
         msg_type = getxmlElement(xmldata,'MsgType')
         content = getxmlElement(xmldata,'Content')
-        toUser = getxmlElement(xmldata,'toUserName')
+        toUser = getxmlElement(xmldata,'fromUserName')
         print(msg_type)
         if msg_type == 'text':
-            if content=="历史消息":
+            if content=="判断消息===历史消息":
                 print(content)
                 try:
                     #_thread.start_new_thread(customerservice.doTextReply(xmldata),("replay"+toUser, ))   #异步回复消息
