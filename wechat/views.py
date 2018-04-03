@@ -9,6 +9,7 @@ import threading
 from wechat.common.tool import getxmlElement, get_token
 from wechat.common import msg,doReply
 from wechat.common import msg
+from django.shortcuts import render
 
 # django默认开启csrf防护，这里使用@csrf_exempt去掉防护
 
@@ -40,7 +41,6 @@ def weixin_main(request):
         return HttpResponse(othercontent)
 
 # 微信服务器推送消息是xml的，根据利用ElementTree来解析出的不同xml内容返回不同的回复信息，就实现了基本的自动回复功能了，也可以按照需求用其他的XML解析方法
-import time
 def autoreply(request):
     try:
         webdata = request.body
@@ -77,6 +77,14 @@ def autoreply(request):
 
     except Exception as Argment:
         return Argment
+
+
+
+
+def weixin_html(request):
+    print("0000000000000000000"+request.method)
+    return render(request, 'index.html', context={})
+
 
 
 

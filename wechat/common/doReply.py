@@ -79,7 +79,7 @@ def doHistoryReply(xmldata):
                 {
                     "title": "Happy Day",
                     "description": "Is Really A Happy Day",
-                    "url": "URL",
+                    "url": "http://192.144.138.251/wx/html",
                     "picurl": "PIC_URL"
                 }
             ]

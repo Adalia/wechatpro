@@ -9,7 +9,8 @@ def post_wx():
        <Event><![CDATA[CLICK]]></Event>\
        <EventKey><![CDATA[V1001_test]]></EventKey>\
        </xml>"
-    res=requests.post("http://127.0.0.1:8000/wx/",data=data.encode('utf-8'))
+    #res=requests.post("http://127.0.0.1:8000/wx/html",data=data.encode('utf-8'))
+    res=requests.get("http://127.0.0.1:8000/wx/html")
     print(res.text)
 
 if __name__ =="__main__":
