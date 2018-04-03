@@ -23,7 +23,7 @@ def weixin_main(request):
         echostr = str(request.GET.get('echostr', None))
         print("echostr: "+echostr)
         # 服务器配置中的token
-        token = 'haihui1215'
+        token = 'haihui1001'
         # 把参数放到list中排序后合成一个字符串，再用sha1加密得到新的字符串与微信发来的signature对比，如果相同就返回echostr给服务器，校验通过
         hashlist = [token, timestamp, nonce]
         print(hashlist)
@@ -43,12 +43,13 @@ def weixin_main(request):
 import time
 def autoreply(request):
     try:
-        #webdata = request.body
-        #xmldata = ET.fromstring(webdata)
-        webdata=request
+        webdata = request.body
         xmldata = ET.fromstring(webdata)
+        #webdata=request
+        #xmldata = ET.fromstring(webdata)
         msg_type = getxmlElement(xmldata,'MsgType')
         content = getxmlElement(xmldata,'Content')
+        toUser = getxmlElement(xmldata,'toUserName')
         print(msg_type)
         if msg_type == 'text':
             if content=="历史消息":
