@@ -43,22 +43,25 @@ def weixin_main(request):
 import time
 def autoreply(request):
     try:
-        webdata = request.body
-        xmldata = ET.fromstring(webdata)
-        #webdata=request
+        #webdata = request.body
         #xmldata = ET.fromstring(webdata)
+        webdata=request
+        xmldata = ET.fromstring(webdata)
         msg_type = getxmlElement(xmldata,'MsgType')
         content = getxmlElement(xmldata,'Content')
-        #print(msg_type)
+        print(msg_type)
         if msg_type == 'text':
             if content=="历史消息":
+                print(content)
                 try:
                     #_thread.start_new_thread(customerservice.doTextReply(xmldata),("replay"+toUser, ))   #异步回复消息
                     threading.Thread(target=customerservice.doHistoryReply,args=(xmldata,),name="replay"+toUser).start()
                 except Exception as e:
                     print(e)
                 return ""
+
             else:
+                print(content)
                 return msg.TextMsg(xmldata).send()
 
 
