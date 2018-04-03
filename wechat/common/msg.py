@@ -20,7 +20,7 @@ class TextMsg(Msg):
 
     def send(self):
         print("send")
-        Content = "你好，欢迎使用我的公众号！请回复'历史消息'或者'h'查看近期消息!"
+        self.__dict['Content'] = "你好，欢迎使用我的公众号！\n请回复'历史消息'或者'h'查看近期消息!"
         XmlForm = """
             <xml>
             <ToUserName><![CDATA[{ToUserName}]]></ToUserName>
