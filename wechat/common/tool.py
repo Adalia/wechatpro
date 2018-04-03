@@ -5,7 +5,6 @@ import json
 
 conf = dealConfig.getConfig()
 
-
 def get_token():
     appID = conf.getConfig("wx", "appID")
     appsecret = conf.getConfig("wx", "appsecret")
@@ -27,7 +26,7 @@ def get_token():
 
 
 def getxmlElement(xmldata,elementname):
-    print("获取"+elementname)
+    #print("获取"+elementname)
     try:
         element = xmldata.find(elementname)
         if element is not None :

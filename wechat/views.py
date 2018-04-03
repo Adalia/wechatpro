@@ -47,29 +47,28 @@ def autoreply(request):
         xmldata = ET.fromstring(webdata)
         #webdata=request
         #xmldata = ET.fromstring(webdata)
-        msg_type = xmldata.find('MsgType').text
-        print(msg_type)
+        msg_type = getxmlElement(xmldata,'MsgType')
+        content = getxmlElement(xmldata,'Content')
+        #print(msg_type)
         if msg_type == 'text':
-            return msg.TextMsg(xmldata).send()
-            '''
-            try:
-                #_thread.start_new_thread(customerservice.doTextReply(xmldata),("replay"+toUser, ))   #异步回复消息
-                threading.Thread(target=customerservice.doTextReply,args=(xmldata,),name="replay"+toUser).start()
-            except Exception as e:
-                print(e)
-            return ""
-            '''
+            if content=="历史消息":
+                try:
+                    #_thread.start_new_thread(customerservice.doTextReply(xmldata),("replay"+toUser, ))   #异步回复消息
+                    threading.Thread(target=customerservice.doHistoryReply,args=(xmldata,),name="replay"+toUser).start()
+                except Exception as e:
+                    print(e)
+                return ""
+            else:
+                return msg.TextMsg(xmldata).send()
 
 
         elif msg_type == 'event':
             print("******接收到event事件*************")
             event = getxmlElement(xmldata,"Event")
             toUser = getxmlElement(xmldata,"FromUserName")
-            print(event)
             if event=="CLICK":
                 #_thread.start_new_thread(customerservice.doEventReply(xmldata), ("replay" + toUser,))  #
                 threading.Thread(target=customerservice.doEventReply, args=(xmldata,), name="replay" + toUser).start()
-            print("hahahhahahah")
             return ""
 
     except Exception as Argment:

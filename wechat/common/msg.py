@@ -18,14 +18,8 @@ class TextMsg(Msg):
         self.__dict['CreateTime'] = int(time.time())
         self.__dict['Content'] = ""
 
-    def set_content(self):
-        if self.content in msgMap.keys():
-            self.__dict['Content'] = msgMap.get(self.content)
-        else:
-            self.__dict['Content'] = "Sorry,i cannot understand!"
-
     def send(self):
-        self.set_content()
+        Content = "你好，欢迎使用我的公众号！\n 请回复'历史消息'或者'h'查看近期消息!"
         XmlForm = """
             <xml>
             <ToUserName><![CDATA[{ToUserName}]]></ToUserName>
@@ -37,7 +31,3 @@ class TextMsg(Msg):
             """
         return XmlForm.format(**self.__dict)
 
-msgMap={
-        "hello":"hello",
-        "你好":"你好",
-    }

@@ -8,8 +8,6 @@ import threading
 import time
 def doEventReply(xmldata):
     event = MenuEventxml(xmldata)
-    print(event.event)
-    print(event.eventkey)
     eventreply = {
         "V1001_test":"性能测试页面正在维护中，真的非常抱歉！",
         "V1002_test":"自动化测试页面正在维护中，真的非常抱歉！",
@@ -21,13 +19,12 @@ def doEventReply(xmldata):
         if event.eventkey == 'V1001_test':
             content = eventreply.get("V1001_test")
         elif event.eventkey == 'V1002_test':
-            content = "自动化测试页面正在维护中，真的非常抱歉！"
+            content = eventreply.get("V1002_test")
         elif event.eventkey == 'V1003_test':
-            content = "接口测试页面正在维护中，真的非常抱歉！"
+            content = eventreply.get("V1003_test")
         else:
-            content = "sorry！"
-
-    print(content)
+            content = eventreply.get("others")
+    #print(content)
     data = {"touser": xmldata.find('FromUserName').text,
             "msgtype": "text",
             "text": {
@@ -43,9 +40,8 @@ def doEventReply(xmldata):
 def doSubscribeReply(xmldata):
     pass
 
-
 def doTextReply(xmldata):
-    print("************异步回复客户请求********************")
+    print("************客服消息********************")
     content = getxmlElement(xmldata, "Content")
     fromuser = getxmlElement(xmldata,"FromUserName")
     if content =="hello" or content =="你好":
@@ -63,6 +59,28 @@ def doTextReply(xmldata):
     ACCESS_TOKEN = get_token()
     url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + ACCESS_TOKEN
     requests.post(url,data=jsondata)
+
+
+def doHistoryReply(xmldata):
+    print("************客服消息********************")
+    content = getxmlElement(xmldata, "Content")
+    fromuser = getxmlElement(xmldata,"FromUserName")
+    if content =="hello" or content =="你好":
+        replycontent = "你好，请问有什么可以帮您？"
+    else:
+        replycontent = "请输入:你好！"
+    data = {"touser":fromuser,
+            "msgtype":"text",
+            "text":{
+                "content":replycontent
+            }
+    }
+    print(replycontent)
+    jsondata = json.dumps(data,ensure_ascii=False).encode('utf-8')
+    ACCESS_TOKEN = get_token()
+    url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + ACCESS_TOKEN
+    requests.post(url,data=jsondata)
+
 
 if __name__ =="__main__":
     data = "<xml><ToUserName><![CDATA[gh_92df4b2446a2]]></ToUserName>\
