@@ -49,7 +49,7 @@ def autoreply(request):
         #xmldata = ET.fromstring(webdata)
         msg_type = getxmlElement(xmldata,'MsgType')
         content = getxmlElement(xmldata,'Content')
-        toUser = getxmlElement(xmldata,'fromUserName')
+        toUser = getxmlElement(xmldata,'FromUserName')
         print(msg_type)
         if msg_type == 'text':
             if content=="历史消息" or  content=="h":
