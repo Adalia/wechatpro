@@ -65,10 +65,7 @@ def doHistoryReply(xmldata):
     print("************客服消息********************")
     content = getxmlElement(xmldata, "Content")
     fromuser = getxmlElement(xmldata,"FromUserName")
-    if content =="hello" or content =="你好":
-        replycontent = "你好，请问有什么可以帮您？"
-    else:
-        replycontent = "请输入:你好！"
+    replycontent = "历史消息正在准备中"
     data = {"touser":fromuser,
             "msgtype":"text",
             "text":{
