@@ -10,11 +10,16 @@ def doEventReply(xmldata):
     event = MenuEventxml(xmldata)
     print(event.event)
     print(event.eventkey)
-
+    eventreply = {
+        "V1001_test":"性能测试页面正在维护中，真的非常抱歉！",
+        "V1002_test":"自动化测试页面正在维护中，真的非常抱歉！",
+        "V1003_test":"接口测试页面正在维护中，真的非常抱歉！",
+        "others":"sorry！"
+    }
     if event.event =='CLICK':
         print(event.eventkey)
         if event.eventkey == 'V1001_test':
-            content = "性能测试页面正在维护中，真的非常抱歉！"
+            content = eventreply.get("V1001_test")
         elif event.eventkey == 'V1002_test':
             content = "自动化测试页面正在维护中，真的非常抱歉！"
         elif event.eventkey == 'V1003_test':
