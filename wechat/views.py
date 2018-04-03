@@ -7,7 +7,7 @@ from django.http import HttpResponse
 import threading
 
 from wechat.common.tool import getxmlElement, get_token
-from wechat.common import msg,customerservice
+from wechat.common import msg,doReply
 from wechat.common import msg
 
 # django默认开启csrf防护，这里使用@csrf_exempt去掉防护
@@ -56,7 +56,7 @@ def autoreply(request):
                 print(content+"1111111111111111111111")
                 try:
                     #_thread.start_new_thread(customerservice.doTextReply(xmldata),("replay"+toUser, ))   #异步回复消息
-                    threading.Thread(target=customerservice.doHistoryReply,args=(xmldata,),name="replay"+toUser).start()
+                    threading.Thread(target=doReply.doHistoryReply, args=(xmldata,), name="replay" + toUser).start()
                 except Exception as e:
                     print(e)
                 return ""
@@ -72,7 +72,7 @@ def autoreply(request):
             toUser = getxmlElement(xmldata,"FromUserName")
             if event=="CLICK":
                 #_thread.start_new_thread(customerservice.doEventReply(xmldata), ("replay" + toUser,))  #
-                threading.Thread(target=customerservice.doEventReply, args=(xmldata,), name="replay" + toUser).start()
+                threading.Thread(target=doReply.doEventReply, args=(xmldata,), name="replay" + toUser).start()
             return ""
 
     except Exception as Argment:

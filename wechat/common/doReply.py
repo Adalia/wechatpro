@@ -65,13 +65,26 @@ def doHistoryReply(xmldata):
     print("************历史消息********************")
     fromuser = getxmlElement(xmldata,"FromUserName")
     replycontent = "历史消息正在准备中"
-    data = {"touser":fromuser,
-            "msgtype":"text",
-            "text":{
-                "content":replycontent
-            }
+    {
+        "touser": fromuser,
+        "msgtype": "news",
+        "news": {
+            "articles": [
+                {
+                    "title": "Happy Day",
+                    "description": "Is Really A Happy Day",
+                    "url": "URL",
+                    "picurl": "PIC_URL"
+                },
+                {
+                    "title": "Happy Day",
+                    "description": "Is Really A Happy Day",
+                    "url": "URL",
+                    "picurl": "PIC_URL"
+                }
+            ]
+        }
     }
-    print(replycontent)
     jsondata = json.dumps(data,ensure_ascii=False).encode('utf-8')
     ACCESS_TOKEN = get_token()
     url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + ACCESS_TOKEN
