@@ -52,8 +52,8 @@ def autoreply(request):
         toUser = getxmlElement(xmldata,'fromUserName')
         print(msg_type)
         if msg_type == 'text':
-            if content=="判断消息===历史消息":
-                print(content)
+            if content=="历史消息" or  content=="h":
+                print(content+"1111111111111111111111")
                 try:
                     #_thread.start_new_thread(customerservice.doTextReply(xmldata),("replay"+toUser, ))   #异步回复消息
                     threading.Thread(target=customerservice.doHistoryReply,args=(xmldata,),name="replay"+toUser).start()
